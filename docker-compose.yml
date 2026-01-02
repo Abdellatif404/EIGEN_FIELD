@@ -1,0 +1,41 @@
+
+name: eigen_field
+
+services:
+
+  ollama:
+    image: ollama/ollama:0.13.5
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./backend/entrypoint.sh:/entrypoint.sh
+    entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
+    restart: unless-stopped
+    networks:
+      - eigen_field_network
+
+  api:
+    build: ./backend
+    container_name: fastapi
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend/app:/opt/eigen_field/app
+      - ./backend/data:/opt/eigen_field/data
+      - ./backend/vectordb:/opt/eigen_field/vectordb
+    env_file:
+      - ./backend/.env
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    networks:
+      - eigen_field_network
+  
+volumes:
+  ollama_data:
+
+networks:
+  eigen_field_network:
+    driver: bridge

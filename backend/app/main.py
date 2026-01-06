@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import os
 from ingestion import index_document, delete_document_from_vectordb
@@ -6,6 +7,14 @@ from retrieval import search_documents
 from generation import generate_response
 
 app = FastAPI(title="EIGEN FIELD RAG Agriculture API")
+
+app.add_middleware(
+	CORSMiddleware,
+	allow_origins=["*"],
+	allow_credentials=True,
+	allow_methods=["*"],
+	allow_headers=["*"],
+)
 
 UPLOAD_DIR = "/opt/eigen_field/data/uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -84,7 +93,7 @@ async def delete_document(doc_name: str):
 		raise HTTPException(status_code=500, detail=str(e))
 	
 @app.post("/chat")
-async def chat(query: str, top_k: int = 5):
+async def chat(query: str, top_k: int = 3):
 	"""Full RAG pipeline: retrieve context and generate answer"""
 
 	try:

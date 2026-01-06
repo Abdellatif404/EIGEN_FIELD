@@ -2,7 +2,7 @@ from langchain_ollama import OllamaLLM
 
 llm = OllamaLLM(
 	model="llama3.2:3b",
-	base_url="http://ollama:11434",
+	base_url="http://eigenfield_ollama:11434",
 	temperature=0.3
 )
 

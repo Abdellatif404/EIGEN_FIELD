@@ -19,6 +19,10 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /opt/eigen_field/app
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	libmagic1 \
+	&& rm -rf /var/lib/apt/lists/*
+
 COPY --from=builder /opt/wheels /wheels
 COPY requirements.txt .
 

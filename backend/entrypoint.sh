@@ -22,9 +22,13 @@ done
 
 echo "Ollama server is ready."
 
-echo "Pulling llama3.2:3b model..."
-ollama pull llama3.2:3b
+echo "Pulling qwen2:1.5b model..."
+ollama pull qwen2:1.5b
 echo "Model pulled successfully."
+
+echo "Preloading model into memory..."
+ollama run qwen2:1.5b "Hello" >/dev/null 2>&1
+echo "Model preloaded successfully."
 
 kill $OLLAMA_PID
 exec ollama serve

@@ -1,34 +1,52 @@
+import time
 from langchain_ollama import OllamaLLM
 
 llm = OllamaLLM(
-	model="llama3.2:3b",
+	model="qwen2:1.5b",
 	base_url="http://eigenfield_ollama:11434",
-	temperature=0.3
+	temperature=0.4,
+	num_predict=800,
+	num_ctx=2048,
+	top_p=0.95,
+	repeat_penalty=1.15,
 )
+
 
 def generate_response(query: str, context_chunks: list):
 	"""Generate answer using retrieved chunks"""
 
-	context = "\n\n".join([
-		f"[Source: {chunk['source']}]\n{chunk['text']}"
-		for chunk in context_chunks
-	])
+	if not context_chunks:
+		yield "No information found."
+		return
 
-	prompt = f"""You are an agricultural knowledge assistant. Answer the question using ONLY the provided context.
+	context = "\n\n".join(
+		[
+			f"Source: {chunk['source']}\n{chunk['text'][:700]}"
+			for chunk in context_chunks[:3]
+		]
+	)
+
+	prompt = f"""You are an agricultural expert. Answer thoroughly using the context.
 
 Context:
 {context}
 
 Question: {query}
 
-Instructions:
-- Answer clearly and concisely
-- Cite sources by filename when making claims
-- If context doesn't contain the answer, say "I don't have enough information in the provided documents"
-- Keep your answer under 200 words
+Provide a detailed answer with examples and explanations (5-8 sentences):"""
 
-Answer:"""
+	first_token = True
+	token_count = 0
 
-	response = llm.invoke(prompt)
+	try:
+		for chunk in llm.stream(prompt):
+			if chunk:
+				if first_token:
+					first_token = False
 
-	return response
+				token_count += 1
+				yield chunk
+
+	except Exception as e:
+		print(f"LLM Error: {e}")
+		yield f"\n[Error: {str(e)}]"

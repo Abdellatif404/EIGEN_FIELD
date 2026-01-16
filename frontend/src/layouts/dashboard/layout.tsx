@@ -58,7 +58,7 @@ export function DashboardLayout({
 
     const headerSlots: HeaderSectionProps['slots'] = {
       topArea: (
-        <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
+        <Alert severity='info' sx={{ display: 'none', borderRadius: 0 }}>
           This is an info Alert.
         </Alert>
       ),
@@ -67,13 +67,23 @@ export function DashboardLayout({
           {/** @slot Nav mobile */}
           <MenuButton
             onClick={onOpen}
-            sx={{ mr: 1, ml: -1, [theme.breakpoints.up(layoutQuery)]: { display: 'none' } }}
+            sx={{
+              mr: 1,
+              ml: -1,
+              [theme.breakpoints.up(layoutQuery)]: { display: 'none' },
+            }}
           />
-          <NavMobile data={navData} open={open} onClose={onClose}/>
+          <NavMobile data={navData} open={open} onClose={onClose} />
         </>
       ),
       rightArea: (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0, sm: 0.75 } }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: { xs: 0, sm: 0.75 },
+          }}
+        >
           {/** @slot Searchbar */}
           <Searchbar />
 
@@ -100,7 +110,9 @@ export function DashboardLayout({
 
   const renderFooter = () => null;
 
-  const renderMain = () => <MainSection {...slotProps?.main}>{children}</MainSection>;
+  const renderMain = () => (
+    <MainSection {...slotProps?.main}>{children}</MainSection>
+  );
 
   return (
     <LayoutSection
@@ -111,9 +123,7 @@ export function DashboardLayout({
       /** **************************************
        * @Sidebar
        *************************************** */
-      sidebarSection={
-        <NavDesktop data={navData} layoutQuery={layoutQuery}/>
-      }
+      sidebarSection={<NavDesktop data={navData} layoutQuery={layoutQuery} />}
       /** **************************************
        * @Footer
        *************************************** */

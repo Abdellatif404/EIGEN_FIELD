@@ -25,7 +25,13 @@ type Props = CardProps & {
   };
 };
 
-export function AnalyticsConversionRates({ title, subheader, chart, sx, ...other }: Props) {
+export function AnalyticsConversionRates({
+  title,
+  subheader,
+  chart,
+  sx,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const chartColors = chart.colors ?? [
@@ -48,7 +54,10 @@ export function AnalyticsConversionRates({ title, subheader, chart, sx, ...other
     dataLabels: {
       enabled: true,
       offsetX: -6,
-      style: { fontSize: '10px', colors: ['#FFFFFF', theme.palette.text.primary] },
+      style: {
+        fontSize: '10px',
+        colors: ['#FFFFFF', theme.palette.text.primary],
+      },
     },
     plotOptions: {
       bar: {
@@ -66,7 +75,7 @@ export function AnalyticsConversionRates({ title, subheader, chart, sx, ...other
       <CardHeader title={title} subheader={subheader} />
 
       <Chart
-        type="bar"
+        type='bar'
         series={chart.series}
         options={chartOptions}
         slotProps={{ loading: { p: 2.5 } }}

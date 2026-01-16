@@ -27,7 +27,8 @@ export function Scrollbar({
       sx={[
         {
           '& .simplebar-wrapper': slotProps?.wrapperSx as React.CSSProperties,
-          '& .simplebar-content-wrapper': slotProps?.contentWrapperSx as React.CSSProperties,
+          '& .simplebar-content-wrapper':
+            slotProps?.contentWrapperSx as React.CSSProperties,
           '& .simplebar-content': slotProps?.contentSx as React.CSSProperties,
         },
         ...(Array.isArray(sx) ? sx : [sx]),

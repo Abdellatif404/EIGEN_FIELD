@@ -13,8 +13,18 @@ import type { ChartProps } from '../types';
 
 export type ChartLoadingProps = BoxProps & Pick<ChartProps, 'type'>;
 
-export function ChartLoading({ sx, className, type, ...other }: ChartLoadingProps) {
-  const circularTypes: ChartProps['type'][] = ['donut', 'radialBar', 'pie', 'polarArea'];
+export function ChartLoading({
+  sx,
+  className,
+  type,
+  ...other
+}: ChartLoadingProps) {
+  const circularTypes: ChartProps['type'][] = [
+    'donut',
+    'radialBar',
+    'pie',
+    'polarArea',
+  ];
 
   return (
     <Box
@@ -38,7 +48,7 @@ export function ChartLoading({ sx, className, type, ...other }: ChartLoadingProp
       {...other}
     >
       <Skeleton
-        variant="circular"
+        variant='circular'
         sx={{
           width: 1,
           height: 1,

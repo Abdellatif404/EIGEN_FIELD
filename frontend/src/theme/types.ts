@@ -20,7 +20,10 @@ import type { CustomShadows } from './core/custom-shadows';
 export type ThemeColorScheme = SupportedColorScheme;
 export type ThemeCssVariables = Pick<
   CssVarsThemeOptions,
-  'colorSchemeSelector' | 'disableCssColorScheme' | 'cssVarPrefix' | 'shouldSkipGeneratingVar'
+  | 'colorSchemeSelector'
+  | 'disableCssColorScheme'
+  | 'cssVarPrefix'
+  | 'shouldSkipGeneratingVar'
 >;
 
 type ColorSchemeOptionsExtended = ColorSystemOptions & {
@@ -30,6 +33,8 @@ type ColorSchemeOptionsExtended = ColorSystemOptions & {
 
 export type ThemeOptions = Omit<MuiThemeOptions, 'components'> &
   Pick<CssVarsThemeOptions, 'defaultColorScheme' | 'components'> & {
-    colorSchemes?: Partial<Record<ThemeColorScheme, ColorSchemeOptionsExtended>>;
+    colorSchemes?: Partial<
+      Record<ThemeColorScheme, ColorSchemeOptionsExtended>
+    >;
     cssVariables?: ThemeCssVariables;
   };

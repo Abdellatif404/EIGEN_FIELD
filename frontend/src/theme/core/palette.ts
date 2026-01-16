@@ -1,4 +1,8 @@
-import type { PaletteColor, ColorSystemOptions, PaletteColorChannel } from '@mui/material/styles';
+import type {
+  PaletteColor,
+  ColorSystemOptions,
+  PaletteColorChannel,
+} from '@mui/material/styles';
 
 import { varAlpha, createPaletteChannel } from 'minimal-shared/utils';
 
@@ -14,10 +18,19 @@ import type { ThemeColorScheme } from '../types';
  */
 
 // Keys for the palette colors
-export type PaletteColorKey = 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
+export type PaletteColorKey =
+  | 'primary'
+  | 'secondary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error';
 
 // Palette color without additional channels
-export type PaletteColorNoChannels = Omit<PaletteColor, 'lighterChannel' | 'darkerChannel'>;
+export type PaletteColorNoChannels = Omit<
+  PaletteColor,
+  'lighterChannel' | 'darkerChannel'
+>;
 
 // Palette color with additional channels
 export type PaletteColorWithChannels = PaletteColor & PaletteColorChannel;
@@ -136,7 +149,9 @@ export const basePalette = {
   divider: varAlpha(grey['500Channel'], 0.2),
 };
 
-export const palette: Partial<Record<ThemeColorScheme, ColorSystemOptions['palette']>> = {
+export const palette: Partial<
+  Record<ThemeColorScheme, ColorSystemOptions['palette']>
+> = {
   light: {
     ...basePalette,
     text: text.light,

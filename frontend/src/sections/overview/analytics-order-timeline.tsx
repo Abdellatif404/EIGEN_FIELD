@@ -26,16 +26,30 @@ type Props = CardProps & {
   }[];
 };
 
-export function AnalyticsOrderTimeline({ title, subheader, list, sx, ...other }: Props) {
+export function AnalyticsOrderTimeline({
+  title,
+  subheader,
+  list,
+  sx,
+  ...other
+}: Props) {
   return (
     <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Timeline
-        sx={{ m: 0, p: 3, [`& .${timelineItemClasses.root}:before`]: { flex: 0, padding: 0 } }}
+        sx={{
+          m: 0,
+          p: 3,
+          [`& .${timelineItemClasses.root}:before`]: { flex: 0, padding: 0 },
+        }}
       >
         {list.map((item, index) => (
-          <Item key={item.id} item={item} lastItem={index === list.length - 1} />
+          <Item
+            key={item.id}
+            item={item}
+            lastItem={index === list.length - 1}
+          />
         ))}
       </Timeline>
     </Card>
@@ -66,9 +80,9 @@ function Item({ item, lastItem, ...other }: ItemProps) {
       </TimelineSeparator>
 
       <TimelineContent>
-        <Typography variant="subtitle2">{item.title}</Typography>
+        <Typography variant='subtitle2'>{item.title}</Typography>
 
-        <Typography variant="caption" sx={{ color: 'text.disabled' }}>
+        <Typography variant='caption' sx={{ color: 'text.disabled' }}>
           {fDateTime(item.time)}
         </Typography>
       </TimelineContent>

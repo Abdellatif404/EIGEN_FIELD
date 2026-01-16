@@ -21,9 +21,9 @@ export default function App({ children }: AppProps) {
 
   const githubButton = () => (
     <Fab
-      size="medium"
-      aria-label="Github"
-      href="https://github.com/minimal-ui-kit/material-kit-react"
+      size='medium'
+      aria-label='Github'
+      href='https://github.com/Abdellatif404/'
       sx={{
         zIndex: 9,
         right: 20,
@@ -34,7 +34,7 @@ export default function App({ children }: AppProps) {
         bgcolor: 'grey.800',
       }}
     >
-      <Iconify width={24} icon="socials:github" sx={{ '--color': 'white' }} />
+      <Iconify width={24} icon='socials:github' sx={{ '--color': 'white' }} />
     </Fab>
   );
 

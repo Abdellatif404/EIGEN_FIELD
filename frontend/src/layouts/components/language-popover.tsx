@@ -19,7 +19,11 @@ export type LanguagePopoverProps = IconButtonProps & {
   }[];
 };
 
-export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProps) {
+export function LanguagePopover({
+  data = [],
+  sx,
+  ...other
+}: LanguagePopoverProps) {
   const { open, anchorEl, onClose, onOpen } = usePopover();
 
   const [locale, setLocale] = useState(data[0].value);
@@ -36,7 +40,7 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
 
   const renderFlag = (label?: string, icon?: string) => (
     <Box
-      component="img"
+      component='img'
       alt={label}
       src={icon}
       sx={{ width: 26, height: 20, borderRadius: 0.5, objectFit: 'cover' }}
@@ -87,7 +91,7 @@ export function LanguagePopover({ data = [], sx, ...other }: LanguagePopoverProp
   return (
     <>
       <IconButton
-        aria-label="Languages button"
+        aria-label='Languages button'
         onClick={onOpen}
         sx={[
           (theme) => ({

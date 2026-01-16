@@ -9,10 +9,10 @@ export default function Page() {
     <>
       <title>{`Chat - ${CONFIG.appName}`}</title>
       <meta
-        name="description"
-        content="Chat with your agricultural documents using AI-powered RAG system"
+        name='description'
+        content='Chat with your agricultural documents using AI-powered RAG system'
       />
-      <meta name="keywords" content="chat,ai,rag,agriculture,assistant" />
+      <meta name='keywords' content='chat,ai,rag,agriculture,assistant' />
 
       <ChatView />
     </>

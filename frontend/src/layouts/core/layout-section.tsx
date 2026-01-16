@@ -30,7 +30,11 @@ export function LayoutSection({
   ...other
 }: LayoutSectionProps) {
   const inputGlobalStyles = (
-    <GlobalStyles styles={(theme) => ({ body: { ...layoutSectionVars(theme), ...cssVars } })} />
+    <GlobalStyles
+      styles={(theme) => ({
+        body: { ...layoutSectionVars(theme), ...cssVars },
+      })}
+    />
   );
 
   return (
@@ -38,7 +42,7 @@ export function LayoutSection({
       {inputGlobalStyles}
 
       <LayoutRoot
-        id="root__layout"
+        id='root__layout'
         className={mergeClasses([layoutClasses.root, className])}
         sx={sx}
         {...other}

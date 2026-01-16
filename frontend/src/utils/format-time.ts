@@ -33,7 +33,13 @@ dayjs.extend(relativeTime);
 
 // ----------------------------------------------------------------------
 
-export type DatePickerFormat = Dayjs | Date | string | number | null | undefined;
+export type DatePickerFormat =
+  | Dayjs
+  | Date
+  | string
+  | number
+  | null
+  | undefined;
 
 export const formatPatterns = {
   dateTime: 'DD MMM YYYY h:mm a', // 17 Apr 2022 12:00 am

@@ -43,9 +43,15 @@ export function AnalyticsNews({ title, subheader, list, sx, ...other }: Props) {
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
         <Button
-          size="small"
-          color="inherit"
-          endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
+          size='small'
+          color='inherit'
+          endIcon={
+            <Iconify
+              icon='eva:arrow-ios-forward-fill'
+              width={18}
+              sx={{ ml: -0.5 }}
+            />
+          }
         >
           View all
         </Button>
@@ -77,14 +83,14 @@ function Item({ item, sx, ...other }: ItemProps) {
       {...other}
     >
       <Avatar
-        variant="rounded"
+        variant='rounded'
         alt={item.title}
         src={item.coverUrl}
         sx={{ width: 48, height: 48, flexShrink: 0 }}
       />
 
       <ListItemText
-        primary={<Link color="inherit">{item.title}</Link>}
+        primary={<Link color='inherit'>{item.title}</Link>}
         secondary={item.description}
         slotProps={{
           primary: { noWrap: true },
@@ -95,7 +101,9 @@ function Item({ item, sx, ...other }: ItemProps) {
         }}
       />
 
-      <Box sx={{ flexShrink: 0, typography: 'caption', color: 'text.disabled' }}>
+      <Box
+        sx={{ flexShrink: 0, typography: 'caption', color: 'text.disabled' }}
+      >
         {fToNow(item.postedAt)}
       </Box>
     </Box>

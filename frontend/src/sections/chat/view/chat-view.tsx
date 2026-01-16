@@ -13,7 +13,7 @@ import { ChatInput } from '../chat-input';
 import { ChatMessage } from '../chat-message';
 import { DocumentList } from '../document-list';
 import { UploadDialog } from '../upload-dialog';
-
+import { TypingIndicator } from '../typing-indicator';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +26,7 @@ type Message = {
 };
 
 type Document = {
+  internal_id: string;
   filename: string;
   uploadDate: string;
   chunks?: number;
@@ -37,6 +38,8 @@ export function ChatView() {
   const [loading, setLoading] = useState(false);
   const [uploadOpen, setUploadOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [isTyping, setIsTyping] = useState(false);
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -52,73 +55,135 @@ export function ChatView() {
 
   const fetchDocuments = async () => {
     try {
-      const response = await fetch('http://localhost:9000/documents');
+      const response = await fetch('http://127.0.0.1:9000/documents');
       if (response.ok) {
         const data = await response.json();
-        if (data.documents && Array.isArray(data.documents)) {
-          const formattedDocs = data.documents.map((filename: string) => ({
-            filename: filename,
+
+        const formattedDocs = data.documents.map((rawName: string) => {
+          const firstUnderscoreIndex = rawName.indexOf('_');
+          const id = rawName.substring(0, firstUnderscoreIndex);
+          const name = rawName.substring(firstUnderscoreIndex + 1);
+
+          return {
+            internal_id: id,
+            filename: name,
             uploadDate: new Date().toLocaleDateString(),
             chunks: 0,
-          }));
-          setDocuments(formattedDocs);
-        } else {
-          setDocuments([]);
-        }
+          };
+        });
+
+        setDocuments(formattedDocs);
       }
     } catch (error) {
       console.error('Failed to fetch documents:', error);
-      setDocuments([]);
     }
   };
 
   const handleSend = async (content: string) => {
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: 'user',
-      content,
-      timestamp: new Date().toLocaleTimeString(),
-    };
+    if (!content.trim()) return;
 
-    setMessages((prev) => [...prev, userMessage]);
+    const now = Date.now();
+    const userMsgId = `u-${now}`;
+    const assistantMsgId = `a-${now}`;
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: userMsgId,
+        role: 'user',
+        content,
+        timestamp: new Date().toLocaleTimeString(),
+      },
+    ]);
+
     setLoading(true);
+    setIsTyping(true);
 
     try {
-      const params = new URLSearchParams({ query: content, top_k: '3' });
-      const response = await fetch(`http://localhost:9000/chat?${params.toString()}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await fetch(
+        `http://127.0.0.1:9000/chat?query=${encodeURIComponent(
+          content
+        )}&top_k=5`,
+        { method: 'POST' }
+      );
 
-      if (response.ok) {
-        const data = await response.json();
-        const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: data.answer,
-          sources: data.sources,
-          timestamp: new Date().toLocaleTimeString(),
-        };
-        setMessages((prev) => [...prev, assistantMessage]);
-      } else {
-        const errorMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: 'Sorry, I encountered an error. Please try again.',
-          timestamp: new Date().toLocaleTimeString(),
-        };
-        setMessages((prev) => [...prev, errorMessage]);
+      if (!response.body) throw new Error('No response body');
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulatedText = '';
+      let assistantMessageAdded = false;
+      let rafId: number | null = null;
+
+      const scheduleUpdate = () => {
+        if (rafId) return;
+
+        rafId = requestAnimationFrame(() => {
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === assistantMsgId
+                ? { ...msg, content: accumulatedText }
+                : msg
+            )
+          );
+          rafId = null;
+        });
+      };
+
+      while (true) {
+        const { value, done } = await reader.read();
+
+        if (done) {
+          if (rafId) cancelAnimationFrame(rafId);
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === assistantMsgId
+                ? {
+                    ...msg,
+                    content: accumulatedText,
+                    timestamp: new Date().toLocaleTimeString(),
+                  }
+                : msg
+            )
+          );
+          break;
+        }
+
+        const chunk = decoder.decode(value, { stream: true });
+        accumulatedText += chunk;
+
+        if (!assistantMessageAdded && accumulatedText.trim().length > 0) {
+          setIsTyping(false);
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: assistantMsgId,
+              role: 'assistant',
+              content: accumulatedText,
+              timestamp: new Date().toLocaleTimeString(),
+            },
+          ]);
+          assistantMessageAdded = true;
+        } else if (assistantMessageAdded) {
+          scheduleUpdate();
+        }
       }
     } catch (error) {
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: 'Sorry, I could not connect to the server.',
-        timestamp: new Date().toLocaleTimeString(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      console.error('Streaming error:', error);
+      setIsTyping(false);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: assistantMsgId,
+          role: 'assistant',
+          content: 'Sorry, there was an error generating the response.',
+          timestamp: new Date().toLocaleTimeString(),
+        },
+      ]);
     } finally {
       setLoading(false);
+      setIsTyping(false);
     }
   };
 
@@ -126,45 +191,66 @@ export function ChatView() {
     const formData = new FormData();
     formData.append('file', file);
 
-    try {
-      const response = await fetch('http://localhost:9000/upload', {
-        method: 'POST',
-        body: formData,
-      });
+    return new Promise<void>((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://127.0.0.1:9000/upload', true);
 
-      if (response.ok) {
-        await fetchDocuments();
-      } else {
-        throw new Error(`Upload failed: ${response.status}`);
-      }
-    } catch (error) {
-      console.error('Upload error:', error);
-      throw error;
-    }
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+
+          const newDoc: Document = {
+            internal_id: data.internal_id,
+            filename: data.filename,
+            uploadDate: new Date().toLocaleDateString(),
+            chunks: data.indexing_summary,
+          };
+
+          setDocuments((prev) => [...prev, newDoc]);
+          resolve();
+        } else {
+          reject(new Error('Upload failed'));
+        }
+      };
+
+      xhr.onerror = () => reject(new Error('Network error'));
+      xhr.send(formData);
+    });
   };
 
   const handleDelete = async (filename: string) => {
+    const docToDelete = documents.find((d) => d.filename === filename);
+    if (!docToDelete) return;
+
+    setDeleting(filename);
     try {
-      const response = await fetch(`http://localhost:9000/documents/${filename}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `http://127.0.0.1:9000/documents/${docToDelete.internal_id}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
       if (response.ok) {
-        await fetchDocuments();
+        setDocuments((prev) =>
+          prev.filter((doc) => doc.internal_id !== docToDelete.internal_id)
+        );
       }
     } catch (error) {
       console.error('Delete error:', error);
+    } finally {
+      setDeleting(null);
     }
   };
 
   return (
-    <DashboardContent maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: 600 }}>
+    <DashboardContent maxWidth='xl'>
+      <Typography variant='h4' sx={{ mb: 3, fontWeight: 600 }}>
         AI Agriculture Assistant
       </Typography>
 
-      <Box 
-        sx={{ 
+      <Box
+        sx={{
           height: 'calc(100vh - 160px)',
           overflow: 'hidden',
           pb: 2,
@@ -195,8 +281,8 @@ export function ChatView() {
                 }}
               >
                 <Box sx={{ flex: 1, minHeight: 0, position: 'relative' }}>
-                  <Scrollbar 
-                    sx={{ 
+                  <Scrollbar
+                    sx={{
                       position: 'absolute',
                       top: 0,
                       left: 0,
@@ -229,26 +315,29 @@ export function ChatView() {
                             mb: 2,
                           }}
                         >
-                          <Iconify 
-                            icon={'solar:chat-round-dots-bold' as any} 
-                            width={40} 
-                            sx={{ color: 'text.secondary' }} 
+                          <Iconify
+                            icon={'solar:chat-round-dots-bold' as any}
+                            width={30}
+                            sx={{ color: 'text.secondary' }}
                           />
                         </Box>
-                        <Typography variant="h6" sx={{ fontWeight: 600, color: 'text.primary' }}>
+                        <Typography
+                          variant='h6'
+                          sx={{ fontWeight: 600, color: 'text.primary' }}
+                        >
                           Start a Conversation
                         </Typography>
-                        <Typography 
-                          variant="body2" 
-                          sx={{ 
-                            color: 'text.secondary', 
+                        <Typography
+                          variant='body2'
+                          sx={{
+                            color: 'text.secondary',
                             textAlign: 'center',
                             maxWidth: 400,
                             px: 2,
                           }}
                         >
-                          Upload agricultural documents and ask questions about farming practices, 
-                          crop management, or soil health.
+                          Upload agricultural documents and ask questions about
+                          farming practices, crop management, or soil health.
                         </Typography>
                       </Box>
                     ) : (
@@ -256,6 +345,7 @@ export function ChatView() {
                         {messages.map((msg) => (
                           <ChatMessage key={msg.id} message={msg} />
                         ))}
+                        {isTyping && <TypingIndicator />}
                         <div ref={messagesEndRef} />
                       </>
                     )}
@@ -277,6 +367,7 @@ export function ChatView() {
                 documents={documents}
                 onUpload={() => setUploadOpen(true)}
                 onDelete={handleDelete}
+                deletingFile={deleting}
               />
             </Box>
           </Grid>

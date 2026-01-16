@@ -48,13 +48,13 @@ export function UserView() {
           alignItems: 'center',
         }}
       >
-        <Typography variant="h4" sx={{ flexGrow: 1 }}>
+        <Typography variant='h4' sx={{ flexGrow: 1 }}>
           Team Members
         </Typography>
         <Button
-          variant="contained"
-          color="inherit"
-          startIcon={<Iconify icon="mingcute:add-line" />}
+          variant='contained'
+          color='inherit'
+          startIcon={<Iconify icon='mingcute:add-line' />}
         >
           Add member
         </Button>
@@ -86,12 +86,12 @@ export function UserView() {
                   )
                 }
                 headLabel={[
-					{ id: 'name', label: 'Name' },
-					{ id: 'company', label: 'Assigned Fields' },
-					{ id: 'role', label: 'Role' },
-					{ id: 'isVerified', label: 'Verified', align: 'center' },
-					{ id: 'status', label: 'Status' },
-					{ id: '' },
+                  { id: 'name', label: 'Name' },
+                  { id: 'company', label: 'Assigned Fields' },
+                  { id: 'role', label: 'Role' },
+                  { id: 'isVerified', label: 'Verified', align: 'center' },
+                  { id: 'status', label: 'Status' },
+                  { id: '' },
                 ]}
               />
               <TableBody>
@@ -111,7 +111,11 @@ export function UserView() {
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+                  emptyRows={emptyRows(
+                    table.page,
+                    table.rowsPerPage,
+                    _users.length
+                  )}
                 />
 
                 {notFound && <TableNoData searchQuery={filterName} />}
@@ -121,7 +125,7 @@ export function UserView() {
         </Scrollbar>
 
         <TablePagination
-          component="div"
+          component='div'
           page={table.page}
           count={_users.length}
           rowsPerPage={table.rowsPerPage}
@@ -152,13 +156,16 @@ export function useTable() {
     [order, orderBy]
   );
 
-  const onSelectAllRows = useCallback((checked: boolean, newSelecteds: string[]) => {
-    if (checked) {
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  }, []);
+  const onSelectAllRows = useCallback(
+    (checked: boolean, newSelecteds: string[]) => {
+      if (checked) {
+        setSelected(newSelecteds);
+        return;
+      }
+      setSelected([]);
+    },
+    []
+  );
 
   const onSelectRow = useCallback(
     (inputValue: string) => {

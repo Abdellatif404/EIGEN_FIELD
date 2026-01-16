@@ -18,7 +18,7 @@
     "isolatedModules": true,
 
     /* Linting */
-	"strict": false,
+    "strict": false,
     "noEmit": true,
     "strictNullChecks": true,
     "noImplicitAny": false

@@ -29,12 +29,12 @@ export function YieldGauge({
   ...other
 }: Props) {
   const theme = useTheme();
-  
+
   const percentage = (current / target) * 100;
   const isLow = percentage < 70;
   const isGood = percentage >= 70 && percentage < 90;
   const isExcellent = percentage >= 90;
-  
+
   const gaugeColor = isLow ? 'error' : isGood ? 'warning' : 'success';
 
   return (
@@ -45,7 +45,10 @@ export function YieldGauge({
           boxShadow: 'none',
           position: 'relative',
           backgroundColor: 'common.white',
-          backgroundImage: `linear-gradient(135deg, ${varAlpha(theme.vars.palette[gaugeColor].lighterChannel, 0.48)}, ${varAlpha(theme.vars.palette[gaugeColor].lightChannel, 0.48)})`,
+          backgroundImage: `linear-gradient(135deg, ${varAlpha(
+            theme.vars.palette[gaugeColor].lighterChannel,
+            0.48
+          )}, ${varAlpha(theme.vars.palette[gaugeColor].lightChannel, 0.48)})`,
         },
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
@@ -67,13 +70,16 @@ export function YieldGauge({
       </Box>
 
       <LinearProgress
-        variant="determinate"
+        variant='determinate'
         value={Math.min(percentage, 100)}
         color={gaugeColor}
         sx={{
           height: 12,
           borderRadius: 1,
-          backgroundColor: varAlpha(theme.vars.palette[gaugeColor].mainChannel, 0.16),
+          backgroundColor: varAlpha(
+            theme.vars.palette[gaugeColor].mainChannel,
+            0.16
+          ),
         }}
       />
 
@@ -96,7 +102,10 @@ export function YieldGauge({
           mt: 2,
           p: 1.5,
           borderRadius: 1,
-          backgroundColor: varAlpha(theme.vars.palette[gaugeColor].mainChannel, 0.08),
+          backgroundColor: varAlpha(
+            theme.vars.palette[gaugeColor].mainChannel,
+            0.08
+          ),
         }}
       >
         <Box sx={{ typography: 'caption', color: `${gaugeColor}.darker` }}>

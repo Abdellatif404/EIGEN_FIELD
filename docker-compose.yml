@@ -10,15 +10,19 @@ services:
       - eigenfield_ollama_data:/root/.ollama
       - ./backend/entrypoint.sh:/entrypoint.sh:ro
     entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
+    environment:
+      - OLLAMA_NUM_PARALLEL=2
+      - OLLAMA_MAX_LOADED_MODELS=1
+      - OLLAMA_FLASH_ATTENTION=1
     restart: unless-stopped
     networks:
       - eigenfield_network
 
-  eigenfield_api:
+  eigenfield_backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: eigenfield_api
+    container_name: eigenfield_backend
     ports:
       - "9000:9000"
     volumes:
@@ -52,7 +56,7 @@ services:
       - VITE_API_URL=http://localhost:9000
       - CHOKIDAR_USEPOLLING=true
     depends_on:
-      - eigenfield_api
+      - eigenfield_backend
     networks:
       - eigenfield_network
     restart: unless-stopped

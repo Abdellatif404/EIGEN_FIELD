@@ -25,7 +25,11 @@ const commonRules = () => ({
   'no-constant-condition': 1,
   'default-case': [2, { commentPattern: '^no default$' }],
   'lines-around-directive': [2, { before: 'always', after: 'always' }],
-  'arrow-body-style': [2, 'as-needed', { requireReturnForObjectLiteral: false }],
+  'arrow-body-style': [
+    2,
+    'as-needed',
+    { requireReturnForObjectLiteral: false },
+  ],
   // react
   'react/jsx-key': 0,
   'react/prop-types': 0,
@@ -60,7 +64,11 @@ const importRules = () => ({
   'import/no-named-as-default-member': 0,
   'import/no-cycle': [
     0, // disabled if slow
-    { maxDepth: '∞', ignoreExternal: false, allowUnsafeDynamicCyclicDependency: false },
+    {
+      maxDepth: '∞',
+      ignoreExternal: false,
+      allowUnsafeDynamicCyclicDependency: false,
+    },
   ],
 });
 
@@ -72,7 +80,12 @@ const unusedImportsRules = () => ({
   'unused-imports/no-unused-imports': 1,
   'unused-imports/no-unused-vars': [
     0,
-    { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+    {
+      vars: 'all',
+      varsIgnorePattern: '^_',
+      args: 'after-used',
+      argsIgnorePattern: '^_',
+    },
   ],
 });
 
@@ -93,8 +106,14 @@ const sortImportsRules = () => {
   };
 
   return {
-    'perfectionist/sort-named-imports': [1, { type: 'line-length', order: 'asc' }],
-    'perfectionist/sort-named-exports': [1, { type: 'line-length', order: 'asc' }],
+    'perfectionist/sort-named-imports': [
+      1,
+      { type: 'line-length', order: 'asc' },
+    ],
+    'perfectionist/sort-named-exports': [
+      1,
+      { type: 'line-length', order: 'asc' },
+    ],
     'perfectionist/sort-exports': [
       1,
       {

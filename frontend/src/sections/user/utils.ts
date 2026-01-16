@@ -16,7 +16,11 @@ export const visuallyHidden = {
 
 // ----------------------------------------------------------------------
 
-export function emptyRows(page: number, rowsPerPage: number, arrayLength: number) {
+export function emptyRows(
+  page: number,
+  rowsPerPage: number,
+  arrayLength: number
+) {
   return page ? Math.max(0, (1 + page) * rowsPerPage - arrayLength) : 0;
 }
 
@@ -58,7 +62,11 @@ type ApplyFilterProps = {
   comparator: (a: any, b: any) => number;
 };
 
-export function applyFilter({ inputData, comparator, filterName }: ApplyFilterProps) {
+export function applyFilter({
+  inputData,
+  comparator,
+  filterName,
+}: ApplyFilterProps) {
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {

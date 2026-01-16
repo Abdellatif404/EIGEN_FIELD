@@ -10,14 +10,22 @@ type TableEmptyRowsProps = TableRowProps & {
   height?: number;
 };
 
-export function TableEmptyRows({ emptyRows, height, sx, ...other }: TableEmptyRowsProps) {
+export function TableEmptyRows({
+  emptyRows,
+  height,
+  sx,
+  ...other
+}: TableEmptyRowsProps) {
   if (!emptyRows) {
     return null;
   }
 
   return (
     <TableRow
-      sx={[height && { height: height * emptyRows }, ...(Array.isArray(sx) ? sx : [sx])]}
+      sx={[
+        height && { height: height * emptyRows },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
       {...other}
     >
       <TableCell colSpan={9} />

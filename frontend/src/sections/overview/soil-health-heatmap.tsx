@@ -23,7 +23,13 @@ type Props = CardProps & {
   data: FieldData[];
 };
 
-export function SoilHealthHeatmap({ title, subheader, data, sx, ...other }: Props) {
+export function SoilHealthHeatmap({
+  title,
+  subheader,
+  data,
+  sx,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const getStatusColor = (status: FieldData['status']) => {
@@ -85,7 +91,7 @@ export function SoilHealthHeatmap({ title, subheader, data, sx, ...other }: Prop
         >
           {data.map((field, index) => {
             const statusColor = getStatusColor(field.status);
-            
+
             return (
               <Box
                 key={index}
@@ -140,7 +146,9 @@ export function SoilHealthHeatmap({ title, subheader, data, sx, ...other }: Prop
                   <Box sx={{ typography: 'caption', color: 'text.secondary' }}>
                     Nitrogen
                   </Box>
-                  <Box sx={{ typography: 'body2', textTransform: 'capitalize' }}>
+                  <Box
+                    sx={{ typography: 'body2', textTransform: 'capitalize' }}
+                  >
                     {field.nitrogen}
                   </Box>
                 </Box>
@@ -148,7 +156,10 @@ export function SoilHealthHeatmap({ title, subheader, data, sx, ...other }: Prop
                 <Box
                   sx={{
                     pt: 1.5,
-                    borderTop: `1px dashed ${varAlpha(theme.vars.palette.grey['500Channel'], 0.24)}`,
+                    borderTop: `1px dashed ${varAlpha(
+                      theme.vars.palette.grey['500Channel'],
+                      0.24
+                    )}`,
                   }}
                 >
                   <Box

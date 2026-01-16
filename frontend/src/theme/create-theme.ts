@@ -33,7 +33,9 @@ type CreateThemeProps = {
   themeOverrides?: ThemeOptions;
 };
 
-export function createTheme({ themeOverrides = {} }: CreateThemeProps = {}): Theme {
+export function createTheme({
+  themeOverrides = {},
+}: CreateThemeProps = {}): Theme {
   const theme = createMuiTheme(baseTheme, themeOverrides);
 
   return theme;

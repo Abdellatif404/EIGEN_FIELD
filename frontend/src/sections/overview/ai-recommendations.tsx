@@ -74,22 +74,18 @@ export function AIRecommendations({
   };
 
   return (
-    <Card 
+    <Card
       sx={[
-        { 
-          height: '100%', 
-          display: 'flex', 
-          flexDirection: 'column' 
+        {
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
         },
         ...(Array.isArray(sx) ? sx : [sx]),
-      ]} 
+      ]}
       {...other}
     >
-      <CardHeader 
-        title={title} 
-        subheader={subheader}
-        sx={{ pb: 2 }}
-      />
+      <CardHeader title={title} subheader={subheader} sx={{ pb: 2 }} />
 
       <Divider />
 
@@ -118,9 +114,9 @@ export function AIRecommendations({
               >
                 {/* Header */}
                 <Box sx={{ mb: 1.5 }}>
-                  <Typography 
-                    variant="subtitle2" 
-                    sx={{ 
+                  <Typography
+                    variant='subtitle2'
+                    sx={{
                       mb: 1,
                       fontWeight: 600,
                       color: 'text.primary',
@@ -132,7 +128,7 @@ export function AIRecommendations({
                   <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                     <Chip
                       label={rec.priority.toUpperCase()}
-                      size="small"
+                      size='small'
                       sx={{
                         height: 20,
                         fontSize: 10,
@@ -146,12 +142,15 @@ export function AIRecommendations({
                     />
                     <Chip
                       label={rec.category}
-                      size="small"
-                      variant="outlined"
+                      size='small'
+                      variant='outlined'
                       sx={{
                         height: 20,
                         fontSize: 10,
-                        borderColor: varAlpha(theme.palette.grey['500Channel'], 0.32),
+                        borderColor: varAlpha(
+                          theme.palette.grey['500Channel'],
+                          0.32
+                        ),
                         '& .MuiChip-label': {
                           px: 1,
                         },
@@ -162,7 +161,7 @@ export function AIRecommendations({
 
                 {/* Description */}
                 <Typography
-                  variant="body2"
+                  variant='body2'
                   sx={{
                     color: 'text.secondary',
                     mb: 2,
@@ -182,25 +181,28 @@ export function AIRecommendations({
                   }}
                 >
                   {rec.estimatedCost && (
-                    <Box 
-                      sx={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
                         gap: 0.5,
                         px: 1.5,
                         py: 0.5,
                         borderRadius: 1,
-                        bgcolor: varAlpha(theme.palette.grey['500Channel'], 0.08),
+                        bgcolor: varAlpha(
+                          theme.palette.grey['500Channel'],
+                          0.08
+                        ),
                       }}
                     >
                       <Iconify
-                        icon={"solar:dollar-minimalistic-bold" as any}
+                        icon={'solar:dollar-minimalistic-bold' as any}
                         width={14}
                         sx={{ color: 'warning.main' }}
                       />
-                      <Typography 
-                        variant="caption" 
-                        sx={{ 
+                      <Typography
+                        variant='caption'
+                        sx={{
                           fontWeight: 600,
                           color: 'text.primary',
                         }}
@@ -211,26 +213,29 @@ export function AIRecommendations({
                   )}
 
                   {rec.estimatedImpact && (
-                    <Box 
-                      sx={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
                         gap: 0.5,
                         px: 1.5,
                         py: 0.5,
                         borderRadius: 1,
-                        bgcolor: varAlpha(theme.palette.success.mainChannel, 0.08),
+                        bgcolor: varAlpha(
+                          theme.palette.success.mainChannel,
+                          0.08
+                        ),
                       }}
                     >
                       <Iconify
-                        icon={"solar:chart-2-bold" as any}
+                        icon={'solar:chart-2-bold' as any}
                         width={14}
                         sx={{ color: 'success.main' }}
                       />
                       <Typography
-                        variant="caption"
-                        sx={{ 
-                          fontWeight: 600, 
+                        variant='caption'
+                        sx={{
+                          fontWeight: 600,
                           color: 'success.main',
                         }}
                       >
@@ -240,25 +245,28 @@ export function AIRecommendations({
                   )}
 
                   {rec.source && (
-                    <Box 
-                      sx={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
                         gap: 0.5,
                         px: 1.5,
                         py: 0.5,
                         borderRadius: 1,
-                        bgcolor: varAlpha(theme.palette.grey['500Channel'], 0.08),
+                        bgcolor: varAlpha(
+                          theme.palette.grey['500Channel'],
+                          0.08
+                        ),
                       }}
                     >
                       <Iconify
-                        icon={"solar:document-text-bold" as any}
+                        icon={'solar:document-text-bold' as any}
                         width={14}
                         sx={{ color: 'info.main' }}
                       />
-                      <Typography 
-                        variant="caption" 
-                        sx={{ 
+                      <Typography
+                        variant='caption'
+                        sx={{
                           color: 'text.secondary',
                           fontWeight: 500,
                         }}
@@ -295,15 +303,15 @@ export function AIRecommendations({
               }}
             >
               <Iconify
-                icon={"solar:check-circle-bold" as any}
+                icon={'solar:check-circle-bold' as any}
                 width={48}
                 sx={{ color: 'success.main' }}
               />
             </Box>
-            <Typography variant="h6" sx={{ mb: 1 }}>
+            <Typography variant='h6' sx={{ mb: 1 }}>
               All Clear!
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            <Typography variant='body2' sx={{ color: 'text.secondary' }}>
               No recommendations at this time.
               <br />
               Your farm is performing optimally.

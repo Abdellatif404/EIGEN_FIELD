@@ -30,7 +30,13 @@ type Props = CardProps & {
   }[];
 };
 
-export function AnalyticsTasks({ title, subheader, list, sx, ...other }: Props) {
+export function AnalyticsTasks({
+  title,
+  subheader,
+  list,
+  sx,
+  ...other
+}: Props) {
   const [selected, setSelected] = useState(['2']);
 
   const handleClickComplete = (taskId: string) => {
@@ -46,7 +52,10 @@ export function AnalyticsTasks({ title, subheader, list, sx, ...other }: Props) 
       <CardHeader title={title} subheader={subheader} sx={{ mb: 1 }} />
 
       <Scrollbar sx={{ minHeight: 304 }}>
-        <Stack divider={<Divider sx={{ borderStyle: 'dashed' }} />} sx={{ minWidth: 560 }}>
+        <Stack
+          divider={<Divider sx={{ borderStyle: 'dashed' }} />}
+          sx={{ minWidth: 560 }}
+        >
           {list.map((item) => (
             <TaskItem
               key={item.id}
@@ -123,8 +132,11 @@ function TaskItem({ item, selected, onChange, sx, ...other }: TaskItemProps) {
           sx={{ flexGrow: 1, m: 0 }}
         />
 
-        <IconButton color={menuActions.open ? 'inherit' : 'default'} onClick={menuActions.onOpen}>
-          <Iconify icon="eva:more-vertical-fill" />
+        <IconButton
+          color={menuActions.open ? 'inherit' : 'default'}
+          onClick={menuActions.onOpen}
+        >
+          <Iconify icon='eva:more-vertical-fill' />
         </IconButton>
       </Box>
 
@@ -152,24 +164,24 @@ function TaskItem({ item, selected, onChange, sx, ...other }: TaskItemProps) {
           }}
         >
           <MenuItem onClick={handleMarkComplete}>
-            <Iconify icon="solar:check-circle-bold" />
+            <Iconify icon='solar:check-circle-bold' />
             Mark complete
           </MenuItem>
 
           <MenuItem onClick={handleEdit}>
-            <Iconify icon="solar:pen-bold" />
+            <Iconify icon='solar:pen-bold' />
             Edit
           </MenuItem>
 
           <MenuItem onClick={handleShare}>
-            <Iconify icon="solar:share-bold" />
+            <Iconify icon='solar:share-bold' />
             Share
           </MenuItem>
 
           <Divider sx={{ borderStyle: 'dashed' }} />
 
           <MenuItem onClick={handleDelete} sx={{ color: 'error.main' }}>
-            <Iconify icon="solar:trash-bin-trash-bold" />
+            <Iconify icon='solar:trash-bin-trash-bold' />
             Delete
           </MenuItem>
         </MenuList>

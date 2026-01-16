@@ -49,14 +49,17 @@ export function NavDesktop({
         flexDirection: 'column',
         zIndex: 'var(--layout-nav-zIndex)',
         width: 'var(--layout-nav-vertical-width)',
-        borderRight: `1px solid ${varAlpha(theme.vars.palette.grey['500Channel'], 0.12)}`,
+        borderRight: `1px solid ${varAlpha(
+          theme.vars.palette.grey['500Channel'],
+          0.12
+        )}`,
         [theme.breakpoints.up(layoutQuery)]: {
           display: 'flex',
         },
         ...sx,
       }}
     >
-      <NavContent data={data} slots={slots}/>
+      <NavContent data={data} slots={slots} />
     </Box>
   );
 }
@@ -88,13 +91,13 @@ export function NavMobile({
           px: 2.5,
           overflow: 'unset',
           width: 'var(--layout-nav-mobile-width)',
-		  justifyContent: 'center',
+          justifyContent: 'center',
           minHeight: 0,
           ...sx,
         },
       }}
     >
-      <NavContent data={data} slots={slots}/>
+      <NavContent data={data} slots={slots} />
     </Drawer>
   );
 }
@@ -106,13 +109,13 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
 
   return (
     <>
-      <Logo sx={{ marginBottom: '0.5rem'}} />
+      <Logo sx={{ marginBottom: '0.5rem' }} />
 
       {slots?.topArea}
 
       <Scrollbar fillContent>
         <Box
-          component="nav"
+          component='nav'
           sx={[
             {
               display: 'flex',
@@ -120,13 +123,13 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
               flexDirection: 'column',
               justifyContent: 'center',
               minHeight: 0,
-			  marginBottom: '5rem',
+              marginBottom: '5rem',
             },
             ...(Array.isArray(sx) ? sx : [sx]),
           ]}
         >
           <Box
-            component="ul"
+            component='ul'
             sx={{
               gap: 1,
               display: 'flex',
@@ -156,19 +159,25 @@ export function NavContent({ data, slots, sx }: NavContentProps) {
                         ...(isActived && {
                           fontWeight: 'fontWeightSemiBold',
                           color: theme.vars.palette.success.main,
-                          bgcolor: varAlpha(theme.vars.palette.success.mainChannel, 0.08),
+                          bgcolor: varAlpha(
+                            theme.vars.palette.success.mainChannel,
+                            0.08
+                          ),
                           '&:hover': {
-                            bgcolor: varAlpha(theme.vars.palette.success.mainChannel, 0.16),
+                            bgcolor: varAlpha(
+                              theme.vars.palette.success.mainChannel,
+                              0.16
+                            ),
                           },
                         }),
                       }),
                     ]}
                   >
-                    <Box component="span" sx={{ width: 24, height: 24 }}>
+                    <Box component='span' sx={{ width: 24, height: 24 }}>
                       {item.icon}
                     </Box>
 
-                    <Box component="span" sx={{ flexGrow: 1 }}>
+                    <Box component='span' sx={{ flexGrow: 1 }}>
                       {item.title}
                     </Box>
 

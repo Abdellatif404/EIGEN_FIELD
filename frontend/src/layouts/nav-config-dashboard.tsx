@@ -3,12 +3,14 @@ import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
 
-const icon = (name: string) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} />;
+const icon = (name: string) => (
+  <SvgColor src={`/assets/icons/navbar/${name}.svg`} />
+);
 
 const ICONS = {
-	dashboard: icon('ic-analytics'),
-	chat: icon('ic-chat'),
-  };
+  dashboard: icon('ic-analytics'),
+  chat: icon('ic-chat'),
+};
 
 export type NavItem = {
   title: string;
@@ -25,7 +27,7 @@ export const navData = [
   },
   {
     title: 'AI Assistant',
-	path: '/chat',
+    path: '/chat',
     icon: ICONS.chat,
   },
   {

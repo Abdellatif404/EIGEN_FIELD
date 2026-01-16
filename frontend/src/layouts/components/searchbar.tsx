@@ -34,11 +34,11 @@ export function Searchbar({ sx, ...other }: BoxProps) {
       <div>
         {!open && (
           <IconButton onClick={handleOpen}>
-            <Iconify icon="eva:search-fill" />
+            <Iconify icon='eva:search-fill' />
           </IconButton>
         )}
 
-        <Slide direction="down" in={open} mountOnEnter unmountOnExit>
+        <Slide direction='down' in={open} mountOnEnter unmountOnExit>
           <Box
             sx={{
               top: 0,
@@ -56,7 +56,10 @@ export function Searchbar({ sx, ...other }: BoxProps) {
               },
               backdropFilter: `blur(6px)`,
               WebkitBackdropFilter: `blur(6px)`,
-              backgroundColor: varAlpha(theme.vars.palette.background.defaultChannel, 0.8),
+              backgroundColor: varAlpha(
+                theme.vars.palette.background.defaultChannel,
+                0.8
+              ),
               ...sx,
             }}
             {...other}
@@ -65,15 +68,19 @@ export function Searchbar({ sx, ...other }: BoxProps) {
               autoFocus
               fullWidth
               disableUnderline
-              placeholder="Search…"
+              placeholder='Search…'
               startAdornment={
-                <InputAdornment position="start">
-                  <Iconify width={20} icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+                <InputAdornment position='start'>
+                  <Iconify
+                    width={20}
+                    icon='eva:search-fill'
+                    sx={{ color: 'text.disabled' }}
+                  />
                 </InputAdornment>
               }
               sx={{ fontWeight: 'fontWeightBold' }}
             />
-            <Button variant="contained" onClick={handleClose}>
+            <Button variant='contained' onClick={handleClose}>
               Search
             </Button>
           </Box>

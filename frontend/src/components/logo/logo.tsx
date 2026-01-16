@@ -18,42 +18,42 @@ export type LogoProps = LinkProps & {
 };
 
 export function Logo({
-	sx,
-	disabled,
-	className,
-	href = '/',
-	isSingle = true,
-	...other
-  }: LogoProps) {
-	return (
-	  <LogoRoot
-		component={RouterLink}
-		href={href}
-		aria-label="Logo"
-		underline="none"
-		className={mergeClasses([logoClasses.root, className])}
-		sx={[
-		  {
-			width: isSingle ? 140 : 140,
-			height: 65,
-			...(disabled && { pointerEvents: 'none' }),
-		  },
-		  ...(Array.isArray(sx) ? sx : [sx]),
-		]}
-		{...other}
-	  >
-		<img 
-		  src="/logo/logo.png" 
-		  alt="EigenField Logo" 
-		  style={{ 
-			width: '100%', 
-			height: '100%', 
-			objectFit: 'contain' 
-		  }}
-		/>
-	  </LogoRoot>
-	);
-  }
+  sx,
+  disabled,
+  className,
+  href = '/',
+  isSingle = true,
+  ...other
+}: LogoProps) {
+  return (
+    <LogoRoot
+      component={RouterLink}
+      href={href}
+      aria-label='Logo'
+      underline='none'
+      className={mergeClasses([logoClasses.root, className])}
+      sx={[
+        {
+          width: isSingle ? 140 : 140,
+          height: 65,
+          ...(disabled && { pointerEvents: 'none' }),
+        },
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
+      {...other}
+    >
+      <img
+        src='/logo/logo.webp'
+        alt='EigenField Logo'
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+        }}
+      />
+    </LogoRoot>
+  );
+}
 
 // ----------------------------------------------------------------------
 

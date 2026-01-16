@@ -22,7 +22,13 @@ type Props = CardProps & {
   };
 };
 
-export function RainfallIrrigationChart({ title, subheader, chart, sx, ...other }: Props) {
+export function RainfallIrrigationChart({
+  title,
+  subheader,
+  chart,
+  sx,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const chartColors = [
@@ -55,7 +61,7 @@ export function RainfallIrrigationChart({ title, subheader, chart, sx, ...other 
       <CardHeader title={title} subheader={subheader} />
 
       <Chart
-        type="bar"
+        type='bar'
         series={chart.series}
         options={chartOptions}
         slotProps={{ loading: { p: 2.5 } }}

@@ -10,7 +10,12 @@ import { layoutClasses } from '../core/classes';
 
 export type AuthContentProps = BoxProps;
 
-export function AuthContent({ sx, children, className, ...other }: AuthContentProps) {
+export function AuthContent({
+  sx,
+  children,
+  className,
+  ...other
+}: AuthContentProps) {
   return (
     <Box
       className={mergeClasses([layoutClasses.content, className])}

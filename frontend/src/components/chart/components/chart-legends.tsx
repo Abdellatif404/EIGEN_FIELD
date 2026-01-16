@@ -34,7 +34,11 @@ export function ChartLegends({
   ...other
 }: ChartLegendsProps) {
   return (
-    <ListRoot className={mergeClasses([chartClasses.legends.root, className])} sx={sx} {...other}>
+    <ListRoot
+      className={mergeClasses([chartClasses.legends.root, className])}
+      sx={sx}
+      {...other}
+    >
       {labels.map((series, index) => (
         <ItemWrap
           key={series}
@@ -45,27 +49,42 @@ export function ChartLegends({
               ...slotProps?.wrapper,
             },
             ...(Array.isArray(slotProps?.wrapper?.sx)
-              ? (slotProps?.wrapper?.sx ?? [])
+              ? slotProps?.wrapper?.sx ?? []
               : [slotProps?.wrapper?.sx]),
           ]}
         >
-          <ItemRoot className={chartClasses.legends.item.root} {...slotProps?.root}>
+          <ItemRoot
+            className={chartClasses.legends.item.root}
+            {...slotProps?.root}
+          >
             {icons.length ? (
-              <ItemIcon className={chartClasses.legends.item.icon} {...slotProps?.icon}>
+              <ItemIcon
+                className={chartClasses.legends.item.icon}
+                {...slotProps?.icon}
+              >
                 {icons[index]}
               </ItemIcon>
             ) : (
-              <ItemDot className={chartClasses.legends.item.dot} {...slotProps?.dot} />
+              <ItemDot
+                className={chartClasses.legends.item.dot}
+                {...slotProps?.dot}
+              />
             )}
 
-            <ItemLabel className={chartClasses.legends.item.label} {...slotProps?.label}>
+            <ItemLabel
+              className={chartClasses.legends.item.label}
+              {...slotProps?.label}
+            >
               {series}
               {!!sublabels.length && <> {` (${sublabels[index]})`}</>}
             </ItemLabel>
           </ItemRoot>
 
           {values && (
-            <ItemValue className={chartClasses.legends.item.value} {...slotProps?.value}>
+            <ItemValue
+              className={chartClasses.legends.item.value}
+              {...slotProps?.value}
+            >
               {values[index]}
             </ItemValue>
           )}
@@ -104,7 +123,10 @@ const ItemIcon = styled('span')({
    * As ':first-child' for ssr
    * https://github.com/emotion-js/emotion/issues/1105#issuecomment-1126025608
    */
-  '& > :first-of-type:not(style):not(:first-of-type ~ *), & > style + *': { width: 20, height: 20 },
+  '& > :first-of-type:not(style):not(:first-of-type ~ *), & > style + *': {
+    width: 20,
+    height: 20,
+  },
 });
 
 const ItemDot = styled('span')({

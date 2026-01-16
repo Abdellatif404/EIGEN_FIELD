@@ -34,11 +34,12 @@ export function UploadDialog({ open, onClose, onUpload }: Props) {
       setUploading(true);
       try {
         await onUpload(file);
+
         setFile(null);
+        setUploading(false);
         onClose();
       } catch (error) {
         console.error('Upload failed:', error);
-      } finally {
         setUploading(false);
       }
     }
@@ -52,10 +53,10 @@ export function UploadDialog({ open, onClose, onUpload }: Props) {
   };
 
   return (
-    <Dialog 
-      open={open} 
-      onClose={handleClose} 
-      maxWidth="sm" 
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth='sm'
       fullWidth
       PaperProps={{
         sx: {
@@ -63,15 +64,13 @@ export function UploadDialog({ open, onClose, onUpload }: Props) {
         },
       }}
     >
-      <DialogTitle sx={{ pb: 2 }}>
-        Upload PDF Document
-      </DialogTitle>
+      <DialogTitle sx={{ pb: 2 }}>Upload PDF Document</DialogTitle>
 
       <DialogContent sx={{ pb: 3 }}>
         {/* Drop Zone */}
         <Box
-          component="label"
-          htmlFor="file-upload"
+          component='label'
+          htmlFor='file-upload'
           sx={{
             mt: 1,
             p: 4,
@@ -92,25 +91,25 @@ export function UploadDialog({ open, onClose, onUpload }: Props) {
           }}
         >
           <input
-            id="file-upload"
-            type="file"
-            accept=".pdf"
+            id='file-upload'
+            type='file'
+            accept='.pdf'
             hidden
             onChange={handleFileChange}
             disabled={uploading}
           />
 
           <Iconify
-            icon={"solar:cloud-upload-bold" as any}
+            icon={'solar:cloud-upload-bold' as any}
             width={56}
             sx={{ mb: 2, color: 'text.disabled' }}
           />
 
-          <Typography variant="subtitle1" sx={{ mb: 0.5, fontWeight: 600 }}>
+          <Typography variant='subtitle1' sx={{ mb: 0.5, fontWeight: 600 }}>
             Drop PDF here or click to browse
           </Typography>
 
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          <Typography variant='body2' sx={{ color: 'text.secondary' }}>
             Supported format: PDF • Max size: 50MB
           </Typography>
         </Box>
@@ -142,21 +141,21 @@ export function UploadDialog({ open, onClose, onUpload }: Props) {
                 flexShrink: 0,
               }}
             >
-              <Iconify icon={"vscode-icons:file-type-pdf2" as any} width={28} />
+              <Iconify icon={'vscode-icons:file-type-pdf2' as any} width={28} />
             </Box>
 
             <Box sx={{ flex: 1, minWidth: 0 }}>
-              <Typography variant="subtitle2" noWrap>
+              <Typography variant='subtitle2' noWrap>
                 {file.name}
               </Typography>
-              <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+              <Typography variant='caption' sx={{ color: 'text.secondary' }}>
                 {(file.size / 1024 / 1024).toFixed(2)} MB
               </Typography>
             </Box>
 
             {!uploading && (
               <Box
-                component="button"
+                component='button'
                 onClick={(e) => {
                   e.stopPropagation();
                   setFile(null);
@@ -173,7 +172,11 @@ export function UploadDialog({ open, onClose, onUpload }: Props) {
                   },
                 }}
               >
-                <Iconify icon={"solar:close-circle-bold" as any} width={20} sx={{ color: 'text.disabled' }} />
+                <Iconify
+                  icon={'solar:close-circle-bold' as any}
+                  width={20}
+                  sx={{ color: 'text.disabled' }}
+                />
               </Box>
             )}
           </Box>
@@ -183,10 +186,10 @@ export function UploadDialog({ open, onClose, onUpload }: Props) {
         {uploading && (
           <Box sx={{ mt: 3 }}>
             <LinearProgress sx={{ mb: 1.5, borderRadius: 1 }} />
-            <Typography 
-              variant="caption" 
-              sx={{ 
-                display: 'block', 
+            <Typography
+              variant='caption'
+              sx={{
+                display: 'block',
                 textAlign: 'center',
                 color: 'text.secondary',
               }}
@@ -198,29 +201,29 @@ export function UploadDialog({ open, onClose, onUpload }: Props) {
       </DialogContent>
 
       <DialogActions sx={{ px: 3, pb: 3, gap: 1 }}>
-        <Button 
-          onClick={handleClose} 
+        <Button
+          onClick={handleClose}
           disabled={uploading}
-          size="large"
-		  sx={{
-			color: 'grey.500',
-			'&:hover': { bgcolor: 'grey.100'},
-			}}
+          size='large'
+          sx={{
+            color: 'grey.500',
+            '&:hover': { bgcolor: 'grey.100' },
+          }}
         >
           Cancel
         </Button>
         <Button
-		variant="contained"
-		onClick={handleUpload}
-		disabled={!file || uploading}
-		size="large"
-		sx={{
-			bgcolor: 'success.main',
-			'&:hover': { bgcolor: 'success.dark'}
-		}}
-		>
-		Upload
-		</Button>
+          variant='contained'
+          onClick={handleUpload}
+          disabled={!file || uploading}
+          size='large'
+          sx={{
+            bgcolor: 'success.main',
+            '&:hover': { bgcolor: 'success.dark' },
+          }}
+        >
+          Upload
+        </Button>
       </DialogActions>
     </Dialog>
   );

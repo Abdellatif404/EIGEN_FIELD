@@ -23,7 +23,13 @@ type Props = CardProps & {
   };
 };
 
-export function AnalyticsWebsiteVisits({ title, subheader, chart, sx, ...other }: Props) {
+export function AnalyticsWebsiteVisits({
+  title,
+  subheader,
+  chart,
+  sx,
+  ...other
+}: Props) {
   const theme = useTheme();
 
   const chartColors = chart.colors ?? [
@@ -45,7 +51,7 @@ export function AnalyticsWebsiteVisits({ title, subheader, chart, sx, ...other }
       <CardHeader title={title} subheader={subheader} />
 
       <Chart
-        type="bar"
+        type='bar'
         series={chart.series}
         options={chartOptions}
         slotProps={{ loading: { p: 2.5 } }}

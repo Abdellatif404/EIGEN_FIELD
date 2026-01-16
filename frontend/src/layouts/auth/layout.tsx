@@ -41,11 +41,13 @@ export function AuthLayout({
   layoutQuery = 'md',
 }: AuthLayoutProps) {
   const renderHeader = () => {
-    const headerSlotProps: HeaderSectionProps['slotProps'] = { container: { maxWidth: false } };
+    const headerSlotProps: HeaderSectionProps['slotProps'] = {
+      container: { maxWidth: false },
+    };
 
     const headerSlots: HeaderSectionProps['slots'] = {
       topArea: (
-        <Alert severity="info" sx={{ display: 'none', borderRadius: 0 }}>
+        <Alert severity='info' sx={{ display: 'none', borderRadius: 0 }}>
           This is an info Alert.
         </Alert>
       ),
@@ -56,9 +58,20 @@ export function AuthLayout({
         </>
       ),
       rightArea: (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1.5 } }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: { xs: 1, sm: 1.5 },
+          }}
+        >
           {/** @slot Help link */}
-          <Link href="#" component={RouterLink} color="inherit" sx={{ typography: 'subtitle2' }}>
+          <Link
+            href='#'
+            component={RouterLink}
+            color='inherit'
+            sx={{ typography: 'subtitle2' }}
+          >
             Need help?
           </Link>
         </Box>
@@ -75,7 +88,7 @@ export function AuthLayout({
         sx={[
           { position: { [layoutQuery]: 'fixed' } },
           ...(Array.isArray(slotProps?.header?.sx)
-            ? (slotProps?.header?.sx ?? [])
+            ? slotProps?.header?.sx ?? []
             : [slotProps?.header?.sx]),
         ]}
       />
@@ -97,7 +110,7 @@ export function AuthLayout({
           },
         }),
         ...(Array.isArray(slotProps?.main?.sx)
-          ? (slotProps?.main?.sx ?? [])
+          ? slotProps?.main?.sx ?? []
           : [slotProps?.main?.sx]),
       ]}
     >

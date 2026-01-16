@@ -14,7 +14,9 @@ export function ErrorBoundary() {
       {inputGlobalStyles()}
 
       <div className={errorBoundaryClasses.root}>
-        <div className={errorBoundaryClasses.container}>{renderErrorMessage(error)}</div>
+        <div className={errorBoundaryClasses.container}>
+          {renderErrorMessage(error)}
+        </div>
       </div>
     </>
   );
@@ -51,7 +53,9 @@ function renderErrorMessage(error: any) {
 
     return (
       <>
-        <h1 className={errorBoundaryClasses.title}>Unexpected Application Error!</h1>
+        <h1 className={errorBoundaryClasses.title}>
+          Unexpected Application Error!
+        </h1>
         <p className={errorBoundaryClasses.message}>
           {error.name}: {error.message}
         </p>

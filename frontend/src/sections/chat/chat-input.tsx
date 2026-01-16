@@ -10,7 +10,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import { Iconify } from 'src/components/iconify';
 
-
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -51,21 +50,42 @@ export function ChatInput({ onSend, disabled, loading }: Props) {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyPress={handleKeyPress}
-        placeholder="Ask about your agricultural documents..."
-        disabled={disabled}
+        placeholder={
+          loading
+            ? 'AI is thinking...'
+            : 'Ask about your agricultural documents...'
+        }
+        disabled={disabled || loading}
+        sx={{
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: 'divider',
+            },
+            '&:hover fieldset': {
+              borderColor: 'grey.400',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: 'grey.500',
+              borderWidth: 2,
+            },
+            '&.Mui-disabled fieldset': {
+              borderColor: 'action.disabledBackground',
+            },
+          },
+        }}
         slotProps={{
           input: {
             endAdornment: (
-              <InputAdornment position="end">
+              <InputAdornment position='end'>
                 {loading ? (
-                  <CircularProgress size={24} color="success" />
+                  <CircularProgress size={24} color='success' />
                 ) : (
                   <IconButton
-                    color="success"
+                    color='success'
                     onClick={handleSend}
                     disabled={!message.trim() || disabled}
                   >
-                    <Iconify icon={"solar:plain-2-bold" as any} width={24} />
+                    <Iconify icon={'solar:plain-2-bold' as any} width={24} />
                   </IconButton>
                 )}
               </InputAdornment>

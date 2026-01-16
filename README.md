@@ -3,15 +3,34 @@
 
 A smart document retrieval system that converts agricultural documents into an interactive form for building an intelligence base. The retrieval-augmented generation system is used to ask the system any question the users wish to know with the answer being referenced and accurate.
 
-## Overview
+---
 
-![Eigen Field Dashboard](frontend/public/overview/dashboard.webp)
+## 📸 Media & Demos
 
-![Eigen Field Chat](frontend/public/overview/chat.webp)
+<details>
+  <summary><b>📊 View Analytics Dashboard</b></summary>
+  <br/>
+  <p align="center">
+    <img src="./frontend/public/overview/dashboard.webp" alt="Eigen Field Dashboard" width="100%"/>
+  </p>
+</details>
 
-### Demo Video
+<details>
+  <summary><b>💬 View RAG Chat Interface</b></summary>
+  <br/>
+  <p align="center">
+    <img src="./frontend/public/overview/chat.webp" alt="Eigen Field Chat" width="100%"/>
+  </p>
+</details>
 
-https://github.com/Abdellatif404/EIGEN_FIELD/frontend/public/overview/demo.mp4](https://raw.githubusercontent.com/Abdellatif404/EIGEN_FIELD/main/frontend/public/overview/demo.mp4)
+<details>
+  <summary><b>🎬 Watch System Demo</b></summary>
+
+  https://github.com/user-attachments/assets/db6bcbdd-0435-4644-ae8b-35c532c09d5f
+
+</details>
+  
+---
 
 ### Key Features
 
@@ -97,3 +116,4 @@ This project demonstrates expertise in:
 ---
 
 This project showcases the practical application of RAG architecture for domain-specific knowledge extraction, demonstrating how modern AI can make large document collections instantly queryable.
+
